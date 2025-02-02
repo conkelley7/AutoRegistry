@@ -1,6 +1,7 @@
 package com.kelley.autoregistry.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -22,7 +24,7 @@ public class Owner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ownerId;
+    private Long ownerId;
 
     @Column(name = "first_name", length = 100, nullable = false)
     private String firstName;
@@ -46,6 +48,9 @@ public class Owner {
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+    
+    @OneToMany(mappedBy="owner")
+    private List<Vehicle> vehicles;
 
     // Getters and Setters (No setter for ownerId - Uses @Id annotation - Hibernate will access field directly)
 
@@ -109,7 +114,15 @@ public class Owner {
         this.updatedAt = updatedAt;
     }
     
-    /**
+    public List<Vehicle> getVehicles() {
+		return vehicles;
+	}
+
+	public void setVehicles(List<Vehicle> vehicles) {
+		this.vehicles = vehicles;
+	}
+
+	/**
      * Compares Owner objects based on whether OwnerId is equal.
      */
     @Override
