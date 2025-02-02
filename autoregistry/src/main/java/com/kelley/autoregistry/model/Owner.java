@@ -109,6 +109,9 @@ public class Owner {
         this.updatedAt = updatedAt;
     }
     
+    /**
+     * Compares Owner objects based on whether OwnerId is equal.
+     */
     @Override
     public boolean equals(Object obj) {
     	if (this == obj) return true;
