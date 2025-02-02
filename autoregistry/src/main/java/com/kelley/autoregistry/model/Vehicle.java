@@ -15,6 +15,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Entity class mapping to 'vehicles' table in database.
+ */
 @Entity
 @Table(name="vehicles")
 public class Vehicle {
@@ -54,6 +57,11 @@ public class Vehicle {
 	
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+	
+	// Constructors
+	
+	public Vehicle() {
+	}
 	
 	// Getters and Setters
 	

@@ -52,6 +52,12 @@ public class Owner {
     @OneToMany(mappedBy="owner")
     private List<Vehicle> vehicles;
 
+    // Constructors
+    
+    public Owner() {
+    }
+    
+    
     // Getters and Setters (No setter for ownerId - Uses @Id annotation - Hibernate will access field directly)
 
     public Long getOwnerId() {
