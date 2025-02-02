@@ -54,7 +54,7 @@ public class Owner {
 
     // Getters and Setters (No setter for ownerId - Uses @Id annotation - Hibernate will access field directly)
 
-    public Integer getOwnerId() {
+    public Long getOwnerId() {
         return ownerId;
     }
 
