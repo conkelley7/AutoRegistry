@@ -70,9 +70,15 @@ public class OwnerServiceImpl implements OwnerService {
 	}
 
 	@Override
-	public Optional<OwnerDTO> readOwner(Long ownerId) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+	public OwnerDTO readOwner(Long ownerId) throws OwnerNotFoundException {
+		
+		Optional<Owner> optionalOwner = ownerRepository.findById(ownerId);
+		
+		if (optionalOwner.isEmpty()) throw new OwnerNotFoundException("Owner not found with ID: " + ownerId);
+		
+		Owner owner = optionalOwner.get();
+		
+		return ownerMapper.toDTO(owner);
 	}
 
 	@Override

@@ -1,8 +1,6 @@
 package com.kelley.autoregistry.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import com.kelley.autoregistry.dto.OwnerDTO;
 import com.kelley.autoregistry.exception.OwnerNotFoundException;
 
@@ -32,7 +30,7 @@ public interface OwnerService {
 	 * @param ownerId - ID of the owner to get details for.
 	 * @return Optional<OwnerDTO> containing owner details, if found.
 	 */
-	Optional<OwnerDTO> readOwner(Long ownerId);
+	OwnerDTO readOwner(Long ownerId) throws OwnerNotFoundException;
 	
 	/**
 	 * Read all owners from the database.
