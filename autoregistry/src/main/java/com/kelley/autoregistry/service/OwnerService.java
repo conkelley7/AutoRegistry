@@ -41,9 +41,10 @@ public interface OwnerService {
 	/**
 	 * Read an owner(s) from database by email address.
 	 * Email is not a unique field, so it is possible for more than one owner to be returned.
+	 * @param email - String containing email address for the search.
 	 * @return List<OwnerDTO> containing owner details, if found.
 	 */
-	List<OwnerDTO> findOwnersByEmail();
+	List<OwnerDTO> findOwnersByEmail(String email);
 	
 	/**
 	 * Deletes an owner from the database.

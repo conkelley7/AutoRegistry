@@ -10,4 +10,5 @@ public interface OwnerRepository extends CrudRepository<Owner, Long> {
 	
 	Optional<Owner> findById(long ownerId);
 	
+	Iterable<Owner> findByEmail(String email);
 }

@@ -95,8 +95,7 @@ public class OwnerServiceImpl implements OwnerService {
 	}
 
 	@Override
-	public List<OwnerDTO> findOwnersByEmail() {
-		// TODO Auto-generated method stub
+	public List<OwnerDTO> findOwnersByEmail(String email) {
 		return null;
 	}
 
