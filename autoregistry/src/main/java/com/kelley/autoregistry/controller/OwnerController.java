@@ -1,5 +1,7 @@
 package com.kelley.autoregistry.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,5 +72,20 @@ public class OwnerController {
 					.status(HttpStatus.NOT_FOUND)
 					.body(null);
 		}
+	}
+	
+	/**
+	 * Return details for all owners in the database.
+	 * 
+	 * @return ResponseEntity with 200 OK and list of OwnerDTO objects or ResponseEntity with status 'Not Found'
+	 */
+	@GetMapping("/find")
+	public ResponseEntity<List<OwnerDTO>> getAllOwners() {
+		List<OwnerDTO> owners = ownerService.readAllOwners();
+		
+		if (owners.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		
+		return ResponseEntity.ok(owners);
+		
 	}
 }

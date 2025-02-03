@@ -1,5 +1,6 @@
 package com.kelley.autoregistry.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,8 +84,14 @@ public class OwnerServiceImpl implements OwnerService {
 
 	@Override
 	public List<OwnerDTO> readAllOwners() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Iterable<Owner> owners = ownerRepository.findAll();
+		
+		List<OwnerDTO> ownersDTOs = new ArrayList<>();
+		
+		owners.forEach(owner -> ownersDTOs.add(ownerMapper.toDTO(owner)));
+		
+		return ownersDTOs;
 	}
 
 	@Override
