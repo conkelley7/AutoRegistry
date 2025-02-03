@@ -96,7 +96,14 @@ public class OwnerServiceImpl implements OwnerService {
 
 	@Override
 	public List<OwnerDTO> findOwnersByEmail(String email) {
-		return null;
+		
+		Iterable<Owner> foundOwners = ownerRepository.findByEmail(email);
+		
+		List<OwnerDTO> foundOwnerDTOs = new ArrayList<>();
+		
+		foundOwners.forEach(owner -> foundOwnerDTOs.add(ownerMapper.toDTO(owner)));
+		
+		return foundOwnerDTOs;
 	}
 
 	@Override

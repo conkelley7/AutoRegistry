@@ -62,7 +62,7 @@ public class OwnerController {
 	 * @param ownerId - ID of the owner to be found and returned
 	 * @return ResponseEntity with 200 OK and found OwnerDTO or ResponseEntity with status 'Not Found'
 	 */
-	@GetMapping("/find/{ownerId}")
+	@GetMapping("/find/id/{ownerId}")
 	public ResponseEntity<OwnerDTO> getOwnerById(@PathVariable Long ownerId) {
 		try {
 			OwnerDTO foundOwnerDTO = ownerService.readOwner(ownerId);
@@ -87,5 +87,20 @@ public class OwnerController {
 		
 		return ResponseEntity.ok(owners);
 		
+	}
+	
+	/**
+	 * Search for a specific owner by their email.
+	 * 
+	 * @param email - email address to be used for search
+	 * @return ResponseEntity with 200 OK and list of OwnerDTO objects or ResponseEntity with status 'Not Found'
+	 */
+	@GetMapping("/find/email/{email}")
+	public ResponseEntity<List<OwnerDTO>> getOwnersByEmail(@PathVariable String email) {
+		List<OwnerDTO> owners = ownerService.findOwnersByEmail(email);
+		
+		if (owners.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		
+		return ResponseEntity.ok(owners);
 	}
 }
