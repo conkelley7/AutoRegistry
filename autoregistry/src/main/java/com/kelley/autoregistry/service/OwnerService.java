@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.kelley.autoregistry.dto.OwnerDTO;
+import com.kelley.autoregistry.exception.OwnerNotFoundException;
 
 /**
  * Contract for implementing business logic related to Owner operations
@@ -24,7 +25,7 @@ public interface OwnerService {
 	 * @param ownerDTO - The DTO containing the updated owner details.
 	 * @return ownerDTO - The updated DTO with changes applied.
 	 */
-	OwnerDTO updateOwner(OwnerDTO ownerDTO);
+	OwnerDTO updateOwner(Long ownerId, OwnerDTO ownerDTO) throws OwnerNotFoundException;
 	
 	/**
 	 * Read owner details from Database for a single owner.

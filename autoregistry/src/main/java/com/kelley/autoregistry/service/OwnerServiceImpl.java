@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.kelley.autoregistry.dto.OwnerDTO;
+import com.kelley.autoregistry.exception.OwnerNotFoundException;
 import com.kelley.autoregistry.mapper.OwnerMapper;
 import com.kelley.autoregistry.model.Owner;
 import com.kelley.autoregistry.repository.OwnerRepository;
@@ -24,19 +25,48 @@ public class OwnerServiceImpl implements OwnerService {
 	
 	@Override
 	public OwnerDTO createOwner(OwnerDTO ownerDTO) {
-		// Convert OwnerDTO to Owner Entity
+		
 		Owner owner = ownerMapper.toEntity(ownerDTO);
-		// Persist Entity to Database
+		
 		owner = ownerRepository.save(owner);
 		
-		// Convert back to OwnerDTO and return
 		return ownerMapper.toDTO(owner);
 	}
 
 	@Override
-	public OwnerDTO updateOwner(OwnerDTO ownerDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	public OwnerDTO updateOwner(Long ownerId, OwnerDTO ownerDTO) throws OwnerNotFoundException {
+		
+		Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
+		
+		if (ownerOptional.isEmpty()) throw new OwnerNotFoundException("Owner not found with ID: " + ownerId);
+		
+		Owner owner = ownerOptional.get();
+		
+		if (ownerDTO.getFirstName() != null) {
+			owner.setFirstName(ownerDTO.getFirstName());
+		}
+		
+		if (ownerDTO.getLastName() != null) {
+			owner.setLastName(ownerDTO.getLastName());
+		}
+		
+		if (ownerDTO.getEmail() != null) {
+			owner.setEmail(ownerDTO.getEmail());
+		}
+		
+		if (ownerDTO.getPhoneNumber() != null) {
+			owner.setPhoneNumber(ownerDTO.getPhoneNumber());
+		}
+		
+		if (ownerDTO.getAddress() != null) {
+			owner.setAddress(ownerDTO.getAddress());
+		}
+		
+		owner = ownerRepository.save(owner);
+		
+		return ownerMapper.toDTO(owner);
+		
+		
 	}
 
 	@Override
