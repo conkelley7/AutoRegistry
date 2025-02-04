@@ -50,6 +50,6 @@ public interface OwnerService {
 	 * Deletes an owner from the database.
 	 * @param ownerId - Id of owner to be deleted.
 	 */
-	void deleteOwner(Long ownerId);
+	void deleteOwner(Long ownerId) throws OwnerNotFoundException;
 	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -102,5 +103,21 @@ public class OwnerController {
 		if (owners.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		
 		return ResponseEntity.ok(owners);
+	}
+	
+	/**
+	 * Delete a specific owner by ID.
+	 * 
+	 * @param ownerId
+	 * @return ResponseEntity<Void> - No Content if successful, Not Found if Owner with ownerId cannot be found
+	 */
+	@DeleteMapping("/delete/id/{ownerId}")
+	public ResponseEntity<Void> deleteOwnerById(@PathVariable Long ownerId) {
+		try {
+			ownerService.deleteOwner(ownerId);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+		} catch (OwnerNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
 	}
 }

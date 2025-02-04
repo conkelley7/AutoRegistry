@@ -66,8 +66,58 @@ public class OwnerRepositoryTest {
 		}
 		assertEquals(size, 1);
 		assertEquals(foundOwner, owner1);
+	}
+	
+	@Test
+	public void testFindAll() {
+		Owner owner1 = new Owner();
+		owner1.setFirstName("John");
+		owner1.setLastName("Doe");
+		owner1.setEmail("john.doe@example.com");
+		owner1.setPhoneNumber("123-456-7890");
+		owner1.setAddress("New Address");
 		
+		ownerRepository.save(owner1);
 		
+		Owner owner2 = new Owner();
+		owner2.setFirstName("Jane");
+		owner2.setLastName("Doe");
+		owner2.setEmail("jane.doe@example.com");
+		owner2.setPhoneNumber("123-456-7890");
+		owner2.setAddress("New Address");
+		
+		ownerRepository.save(owner2);
+		
+		Iterable<Owner> foundOwners = ownerRepository.findAll();
+		
+		int size = 0;
+		for (@SuppressWarnings("unused") Owner owner: foundOwners) {
+			size++;
+		}
+		assertEquals(size, 2);
+	}
+	
+	@Test
+	public void testDeleteOwner() {
+		Owner owner1 = new Owner();
+		owner1.setFirstName("John");
+		owner1.setLastName("Doe");
+		owner1.setEmail("john.doe@example.com");
+		owner1.setPhoneNumber("123-456-7890");
+		owner1.setAddress("New Address");
+		
+		owner1 = ownerRepository.save(owner1);
+		
+		ownerRepository.delete(owner1);
+		
+		Iterable<Owner> foundOwners = ownerRepository.findAll();
+		
+		int size = 0;
+		for (@SuppressWarnings("unused") Owner owner: foundOwners) {
+			size++;
+		}
+		
+		assertEquals(size, 0);
 	}
 	
 	

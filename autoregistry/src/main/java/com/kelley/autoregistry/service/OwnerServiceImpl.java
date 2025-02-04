@@ -107,9 +107,15 @@ public class OwnerServiceImpl implements OwnerService {
 	}
 
 	@Override
-	public void deleteOwner(Long ownerId) {
-		// TODO Auto-generated method stub
-
+	public void deleteOwner(Long ownerId) throws OwnerNotFoundException {
+		
+		Optional<Owner> optionalOwnerToRemove = ownerRepository.findById(ownerId);
+		
+		if (optionalOwnerToRemove.isEmpty()) throw new OwnerNotFoundException("Owner not found with ID: " + ownerId);
+		
+		Owner ownerToRemove = optionalOwnerToRemove.get();
+		
+		ownerRepository.delete(ownerToRemove);
 	}
 
 }
