@@ -26,13 +26,13 @@ public interface VehicleService {
 	 * @param vehicleDTO - containing vehicle details to be updated.
 	 * @return VehicleDTO - return vehicle details after successful update or Exception if no vehicle found.
 	 */
-	VehicleDTO updateVehicle(String vin, VehicleDTO vehicleDTO) throws VehicleNotFoundException;
+	VehicleDTO updateVehicle(String vin, VehicleDTO vehicleDTO) throws VehicleNotFoundException, OwnerNotFoundException;
 	
 	/**
 	 * Search for an existing vehicle using the VIN number.
 	 * 
 	 * @param vin - Vin of the desired vehicle.
-	 * @return VehicleDTO - return vehicle details if found or Exception if no vehicle found.
+	 * @return VehicleDTO - return vehicle details if found or Exception if no vehicle or owner are found.
 	 */
 	VehicleDTO searchVehicle(String vin) throws VehicleNotFoundException;
 	

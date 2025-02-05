@@ -2,6 +2,7 @@ package com.kelley.autoregistry.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,34 @@ public class VehicleRepositoryTest {
 		
 		assertEquals(savedVehicle, vehicle);
 		assertEquals(savedVehicle.getOwner(), null);
+	}
+	
+	@Test
+	public void testFindByVin() {
+		Vehicle vehicle1 = new Vehicle();
+		vehicle1.setVin("12345ABCDE");
+		vehicle1.setMake("Ford");
+		vehicle1.setModel("F150");
+		vehicle1.setColor("White");
+		vehicle1.setLicensePlate("ABC123");
+		vehicle1.setYear(2015);
+		vehicle1.setRegistrationDate(LocalDate.now());
+		
+		vehicleRepository.save(vehicle1);
+		
+		Vehicle vehicle2 = new Vehicle();
+		vehicle2.setVin("019IDJABDF9278");
+		vehicle2.setMake("Honda");
+		vehicle2.setModel("Civic");
+		vehicle2.setColor("Black");
+		vehicle2.setLicensePlate("ACC123");
+		vehicle2.setYear(2018);
+		vehicle2.setRegistrationDate(LocalDate.now());
+		
+		vehicleRepository.save(vehicle2);
+		
+		Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin("12345ABCDE");
+		Vehicle foundVehicle = optionalVehicle.get();
+		assertEquals(vehicle1, foundVehicle);
 	}
 }

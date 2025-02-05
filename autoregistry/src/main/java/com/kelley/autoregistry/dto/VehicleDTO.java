@@ -7,7 +7,7 @@ public class VehicleDTO {
     private String vin;
     private String make;
     private String model;
-    private int year;
+    private Integer year;
     private String color;
     private String licensePlate;
     private Long ownerId;
@@ -55,7 +55,7 @@ public class VehicleDTO {
         this.model = model;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 

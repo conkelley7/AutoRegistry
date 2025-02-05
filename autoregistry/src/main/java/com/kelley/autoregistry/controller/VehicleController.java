@@ -3,13 +3,16 @@ package com.kelley.autoregistry.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kelley.autoregistry.dto.VehicleDTO;
 import com.kelley.autoregistry.exception.OwnerNotFoundException;
+import com.kelley.autoregistry.exception.VehicleNotFoundException;
 import com.kelley.autoregistry.service.VehicleService;
 
 @RestController
@@ -31,7 +34,7 @@ public class VehicleController {
 	 */
 	@PostMapping("/add")
 	public ResponseEntity<VehicleDTO> addVehicle(@RequestBody VehicleDTO vehicleDTO) {
-		vehicleService.addVehicle(vehicleDTO);
+		vehicleDTO = vehicleService.addVehicle(vehicleDTO);
 		return ResponseEntity.ok(vehicleDTO);
 	}
 	
@@ -45,6 +48,18 @@ public class VehicleController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());
     }
+	
+	@ExceptionHandler(VehicleNotFoundException.class)
+    public ResponseEntity<String> handleVehicleNotFoundException(VehicleNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage());
+    }
+	
+	@PutMapping("/update/{vin}")
+	public ResponseEntity<VehicleDTO> updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable String vin) {
+		vehicleDTO = vehicleService.updateVehicle(vin, vehicleDTO);
+		return ResponseEntity.ok(vehicleDTO);
+	}
 	
 	
 	
