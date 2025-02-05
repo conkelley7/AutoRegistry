@@ -59,11 +59,18 @@ public class VehicleMapper {
 			return null;
 		}
 		
-		Optional<Owner> optionalOwner = ownerRepository.findById(vehicleDTO.getOwnerId());
+		Owner owner = null;
 		
-		if (optionalOwner.isEmpty()) throw new OwnerNotFoundException("Owner not found with ID: " + vehicleDTO.getOwnerId());
+		// If the OwnerID provided in the DTO is NOT null, then get the Owner from the Repository.
+		if (vehicleDTO.getOwnerId() != null) {
+			Long ownerId = vehicleDTO.getOwnerId();
+			Optional<Owner> optionalOwner = ownerRepository.findById(ownerId);
+			
+			if (optionalOwner.isEmpty()) throw new OwnerNotFoundException("Owner not found with ID: " + ownerId);
+			
+			owner = optionalOwner.get();
+		}
 		
-		Owner owner = optionalOwner.get();
 		
 		Vehicle vehicle = new Vehicle();
 		vehicle.setVin(vehicleDTO.getVin());

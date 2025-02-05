@@ -1,6 +1,7 @@
 package com.kelley.autoregistry.service;
 
 import com.kelley.autoregistry.dto.VehicleDTO;
+import com.kelley.autoregistry.exception.OwnerNotFoundException;
 import com.kelley.autoregistry.exception.VehicleNotFoundException;
 
 /**
@@ -13,8 +14,10 @@ public interface VehicleService {
 	 * 
 	 * @param vehicleDTO - containing details needed to add vehicle to database
 	 * @return vehicleDTO - return vehicle details after successful persistence
+	 * OR OwnerNotFoundException if an OwnerId is provided by the client and no owner
+	 * can be found.
 	 */
-	VehicleDTO addVehicle(VehicleDTO vehicleDTO);
+	VehicleDTO addVehicle(VehicleDTO vehicleDTO) throws OwnerNotFoundException;
 	
 	/**
 	 * Update an existing vehicle in the database.
