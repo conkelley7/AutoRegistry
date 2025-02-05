@@ -17,6 +17,20 @@ import com.kelley.autoregistry.dto.OwnerDTO;
 import com.kelley.autoregistry.exception.OwnerNotFoundException;
 import com.kelley.autoregistry.service.OwnerService;
 
+/*
+ * Learned about using an @ControllerAdvice class for global exception handling recently.
+ * If I had learned about it before implementing the OwnerController class fully, I would have used
+ * that instead. Definetly something to note for future projects.
+ * 
+ * Check out my VehicleController.java class to see what I have learned and better exception handling
+ * practices.
+ * 
+ * I may go back in the future and refactor this class and VehicleController.java to instead use a single
+ * @ControllerAdvice class.
+ */
+
+
+
 @RestController
 @RequestMapping(("/owner"))
 public class OwnerController {

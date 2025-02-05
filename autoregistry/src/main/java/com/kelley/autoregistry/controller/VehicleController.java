@@ -3,6 +3,7 @@ package com.kelley.autoregistry.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,6 +39,31 @@ public class VehicleController {
 		return ResponseEntity.ok(vehicleDTO);
 	}
 	
+	/**
+	 * Update an existing vehicle in the database.
+	 * 
+	 * @param vehicleDTO - containing update details
+	 * @param vin - To identify the vehicle in the database to update
+	 * @return ResponseEntity with 200 OK and updated vehicle details
+	 */
+	@PutMapping("/update/{vin}")
+	public ResponseEntity<VehicleDTO> updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable String vin) {
+		vehicleDTO = vehicleService.updateVehicle(vin, vehicleDTO);
+		return ResponseEntity.ok(vehicleDTO);
+	}
+	
+	/**
+	 * Search for a specific vehicle by the VIN number.
+	 * 
+	 * @param vin - Vin number of the vehicle for the search
+	 * @return 200 OK with found vehicle details
+	 */
+	@GetMapping("/find/{vin}")
+	public ResponseEntity<VehicleDTO> findVehicleByVin(@PathVariable String vin) {
+		VehicleDTO vehicleDTO = vehicleService.searchVehicle(vin);
+		return ResponseEntity.ok(vehicleDTO);
+	}
+	
 	/*
 	 * Learned about using an @ControllerAdvice class for global exception handling recently.
 	 * If I had learned about it before implementing the OwnerController class fully, I would have used
@@ -55,11 +81,7 @@ public class VehicleController {
                 .body(e.getMessage());
     }
 	
-	@PutMapping("/update/{vin}")
-	public ResponseEntity<VehicleDTO> updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable String vin) {
-		vehicleDTO = vehicleService.updateVehicle(vin, vehicleDTO);
-		return ResponseEntity.ok(vehicleDTO);
-	}
+	
 	
 	
 	

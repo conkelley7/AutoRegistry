@@ -92,8 +92,14 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	public VehicleDTO searchVehicle(String vin) throws VehicleNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin(vin);
+		
+		if (optionalVehicle.isEmpty()) throw new VehicleNotFoundException("Vehicle not found with Vin: " + vin);
+		
+		Vehicle vehicle = optionalVehicle.get();
+		
+		return vehicleMapper.toDTO(vehicle);
 	}
 
 	@Override
