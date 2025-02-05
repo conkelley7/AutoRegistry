@@ -41,7 +41,7 @@ public class VehicleServiceImpl implements VehicleService {
 		
 		Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin(vin);
 		
-		if (optionalVehicle.isEmpty()) throw new VehicleNotFoundException("Vehicle not found with Vin: " + vin);
+		if (optionalVehicle.isEmpty()) throw new VehicleNotFoundException("Vehicle not found with VIN: " + vin);
 		
 		Vehicle vehicle = optionalVehicle.get();
 		
@@ -95,7 +95,7 @@ public class VehicleServiceImpl implements VehicleService {
 		
 		Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin(vin);
 		
-		if (optionalVehicle.isEmpty()) throw new VehicleNotFoundException("Vehicle not found with Vin: " + vin);
+		if (optionalVehicle.isEmpty()) throw new VehicleNotFoundException("Vehicle not found with VIN: " + vin);
 		
 		Vehicle vehicle = optionalVehicle.get();
 		
@@ -104,8 +104,14 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	public void deleteVehicle(String vin) throws VehicleNotFoundException {
-		// TODO Auto-generated method stub
-
+		
+		Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin(vin);
+		
+		if (optionalVehicle.isEmpty()) throw new VehicleNotFoundException("Vehicle not found with VIN: " + vin);
+		
+		Vehicle vehicle = optionalVehicle.get();
+		
+		vehicleRepository.delete(vehicle);
 	}
 
 }

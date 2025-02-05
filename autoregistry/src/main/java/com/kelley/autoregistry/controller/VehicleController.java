@@ -2,6 +2,7 @@ package com.kelley.autoregistry.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,6 +63,18 @@ public class VehicleController {
 	public ResponseEntity<VehicleDTO> findVehicleByVin(@PathVariable String vin) {
 		VehicleDTO vehicleDTO = vehicleService.searchVehicle(vin);
 		return ResponseEntity.ok(vehicleDTO);
+	}
+	
+	/**
+	 * Delete a specific vehicle by the VIN number.
+	 * 
+	 * @param vin - VIN number of the vehicle to delete.
+	 * @return ResponseEntity 204 No Content if successful.
+	 */
+	@DeleteMapping("/delete/{vin}")
+	public ResponseEntity<Void> deleteVehicleByVin(@PathVariable String vin) {
+		vehicleService.deleteVehicle(vin);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 	
 	/*
