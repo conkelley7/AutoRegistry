@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +29,7 @@ public class Vehicle {
 	
 	// Marked as Natural ID for clarity, will be used in equals() implementation
 	@NaturalId
-	@Column(name = "vin", length = 17, nullable = false)
+	@Column(name = "vin", length = 17, nullable = false, unique = true)
 	private String vin;
 	
 	@Column(name = "make", length = 100, nullable = false)
@@ -52,9 +54,11 @@ public class Vehicle {
 	@Column(name = "registration_date")
 	private LocalDate registrationDate;
 	
+	@CreationTimestamp
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 	
+	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 	

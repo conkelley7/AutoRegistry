@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class VehicleDTO {
 
-    private Long vehicleId;
     private String vin;
     private String make;
     private String model;
@@ -17,9 +16,9 @@ public class VehicleDTO {
     public VehicleDTO() {
     }
 
-    public VehicleDTO(Long vehicleId, String vin, String make, String model, int year, String color, 
+    public VehicleDTO(String vin, String make, String model, int year, String color, 
                       String licensePlate, Long ownerId, LocalDate registrationDate) {
-        this.vehicleId = vehicleId;
+        
         this.vin = vin;
         this.make = make;
         this.model = model;
@@ -31,14 +30,6 @@ public class VehicleDTO {
     }
 
     // Getters and Setters
-
-    public Long getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(Long vehicleId) {
-        this.vehicleId = vehicleId;
-    }
 
     public String getVin() {
         return vin;
