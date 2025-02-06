@@ -3,7 +3,6 @@ package com.kelley.autoregistry.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kelley.autoregistry.dto.VehicleDTO;
-import com.kelley.autoregistry.exception.OwnerNotFoundException;
-import com.kelley.autoregistry.exception.VehicleNotFoundException;
 import com.kelley.autoregistry.service.VehicleService;
 
 @RestController
@@ -32,12 +29,12 @@ public class VehicleController {
 	 * @param vehicleDTO - Containing vehicle details to add new vehicle to database.
 	 * @return 200 OK Response Entity with vehicle details
 	 * If an OwnerID is provided by the client, and the owner cannot be found in the database
-	 * to match the ID, a 404 error is returned.
+	 * to match the ID, a 404 error is returned (handled by GlobalExceptionHandler).
 	 */
 	@PostMapping("/add")
 	public ResponseEntity<VehicleDTO> addVehicle(@RequestBody VehicleDTO vehicleDTO) {
 		vehicleDTO = vehicleService.addVehicle(vehicleDTO);
-		return ResponseEntity.ok(vehicleDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(vehicleDTO);
 	}
 	
 	/**
@@ -74,29 +71,7 @@ public class VehicleController {
 	@DeleteMapping("/delete/{vin}")
 	public ResponseEntity<Void> deleteVehicleByVin(@PathVariable String vin) {
 		vehicleService.deleteVehicle(vin);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-	
-	/*
-	 * Learned about using an @ControllerAdvice class for global exception handling recently.
-	 * If I had learned about it before implementing the OwnerController class fully, I would have used
-	 * that instead. Definetly something to note for future projects.
-	 */
-	@ExceptionHandler(OwnerNotFoundException.class)
-    public ResponseEntity<String> handleOwnerNotFoundException(OwnerNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(e.getMessage());
-    }
-	
-	@ExceptionHandler(VehicleNotFoundException.class)
-    public ResponseEntity<String> handleVehicleNotFoundException(VehicleNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(e.getMessage());
-    }
-	
-	
-	
-	
-	
 	
 }
