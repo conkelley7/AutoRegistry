@@ -18,7 +18,7 @@ import com.kelley.autoregistry.service.OwnerService;
 
 
 @RestController
-@RequestMapping(("/owner"))
+@RequestMapping(("api/v2/owner"))
 public class OwnerController {
 	
 	private final OwnerService ownerService;

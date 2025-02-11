@@ -15,7 +15,7 @@ import com.kelley.autoregistry.dto.VehicleDTO;
 import com.kelley.autoregistry.service.VehicleService;
 
 @RestController
-@RequestMapping("/vehicle")
+@RequestMapping("/api/v2/vehicle")
 public class VehicleController {
 	
 	private final VehicleService vehicleService;

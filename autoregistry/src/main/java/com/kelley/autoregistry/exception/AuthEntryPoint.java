@@ -23,7 +23,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		
 		PrintWriter writer = response.getWriter();
-		writer.println("Error" + authException.getMessage());
+		writer.println("Error: " + authException.getMessage());
 	}
 
 }
