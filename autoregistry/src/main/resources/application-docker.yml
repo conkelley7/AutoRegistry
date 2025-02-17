@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://mariadb:3306/auto_registry
+    username: user
+    password: userpassword
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        hibernate.show_sql: true
+        hibernate.format_sql: true
