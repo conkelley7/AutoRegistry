@@ -1,6 +1,8 @@
 package com.kelley.autoregistry.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.kelley.autoregistry.dto.OwnerDTO;
 import com.kelley.autoregistry.exception.OwnerNotFoundException;
 
@@ -30,13 +32,14 @@ public interface OwnerService {
 	 * @param ownerId - ID of the owner to get details for.
 	 * @return Optional<OwnerDTO> containing owner details, if found.
 	 */
-	OwnerDTO readOwner(Long ownerId) throws OwnerNotFoundException;
+	OwnerDTO getOwnerById(Long ownerId) throws OwnerNotFoundException;
 	
 	/**
 	 * Read all owners from the database.
+	 * @param pageable - pageable object for paginated results
 	 * @return List of OwnerDTO objects for each owner in database.
 	 */
-	List<OwnerDTO> readAllOwners();
+	Page<OwnerDTO> getAllOwners(Pageable pageable);
 	
 	/**
 	 * Read an owner(s) from database by email address.
@@ -44,7 +47,7 @@ public interface OwnerService {
 	 * @param email - String containing email address for the search.
 	 * @return List<OwnerDTO> containing owner details, if found.
 	 */
-	List<OwnerDTO> findOwnersByEmail(String email);
+	Page<OwnerDTO> getOwnersByEmail(String email, Pageable pageable);
 	
 	/**
 	 * Deletes an owner from the database.

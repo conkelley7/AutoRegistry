@@ -53,7 +53,7 @@ public class SecurityConfig {
 		// Define that Spring Security will never create a session and we can therefore disable CSRF
 		http.csrf((csrf) -> csrf.disable())
 		 .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-		 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests.requestMatchers(HttpMethod.POST, "api/v2/login").permitAll().anyRequest().authenticated())
+		 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests.requestMatchers(HttpMethod.POST, "api/v3/login").permitAll().anyRequest().authenticated())
 		 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 		 .exceptionHandling((exceptionHandling) -> exceptionHandling.authenticationEntryPoint(authEntryPoint));
 		
