@@ -2,18 +2,20 @@ package com.kelley.autoregistry.repository;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.kelley.autoregistry.model.Owner;
 
-public interface OwnerRepository extends CrudRepository<Owner, Long> {
+public interface OwnerRepository extends JpaRepository<Owner, Long> {
 	
 	Optional<Owner> findById(long ownerId);
 	
-	Iterable<Owner> findByEmail(String email);
+	Page<Owner> findByEmail(String email, Pageable pageable);
 	
 	/*
 	 * Additional Queries created for extra Data JPA practice below.

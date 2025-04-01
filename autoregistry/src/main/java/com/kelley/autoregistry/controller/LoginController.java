@@ -14,7 +14,7 @@ import com.kelley.autoregistry.model.AccountCredentials;
 import com.kelley.autoregistry.service.JwtService;
 
 @RestController
-@RequestMapping("api/v2")
+@RequestMapping("api/v3")
 public class LoginController {
 	
 	private final JwtService jwtService;

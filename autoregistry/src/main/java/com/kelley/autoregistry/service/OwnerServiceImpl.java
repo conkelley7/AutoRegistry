@@ -1,9 +1,9 @@
 package com.kelley.autoregistry.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.kelley.autoregistry.dto.OwnerDTO;
@@ -71,7 +71,7 @@ public class OwnerServiceImpl implements OwnerService {
 	}
 
 	@Override
-	public OwnerDTO readOwner(Long ownerId) throws OwnerNotFoundException {
+	public OwnerDTO getOwnerById(Long ownerId) throws OwnerNotFoundException {
 		
 		Optional<Owner> optionalOwner = ownerRepository.findById(ownerId);
 		
@@ -83,27 +83,19 @@ public class OwnerServiceImpl implements OwnerService {
 	}
 
 	@Override
-	public List<OwnerDTO> readAllOwners() {
+	public Page<OwnerDTO> getAllOwners(Pageable pageable) {
 		
-		Iterable<Owner> owners = ownerRepository.findAll();
+		Page<Owner> owners = ownerRepository.findAll(pageable);
 		
-		List<OwnerDTO> ownersDTOs = new ArrayList<>();
-		
-		owners.forEach(owner -> ownersDTOs.add(ownerMapper.toDTO(owner)));
-		
-		return ownersDTOs;
+		return owners.map(owner -> ownerMapper.toDTO(owner));
 	}
 
 	@Override
-	public List<OwnerDTO> findOwnersByEmail(String email) {
+	public Page<OwnerDTO> getOwnersByEmail(String email, Pageable pageable) {
 		
-		Iterable<Owner> foundOwners = ownerRepository.findByEmail(email);
+		Page<Owner> foundOwners = ownerRepository.findByEmail(email, pageable);
 		
-		List<OwnerDTO> foundOwnerDTOs = new ArrayList<>();
-		
-		foundOwners.forEach(owner -> foundOwnerDTOs.add(ownerMapper.toDTO(owner)));
-		
-		return foundOwnerDTOs;
+		return foundOwners.map(owner -> ownerMapper.toDTO(owner));
 	}
 
 	@Override
