@@ -17,6 +17,8 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
 	
 	Page<Owner> findByEmail(String email, Pageable pageable);
 	
+	boolean existsByEmail(String email);
+	
 	/*
 	 * Additional Queries created for extra Data JPA practice below.
 	 * These aren't linked to any controller endpoints, just for fun.

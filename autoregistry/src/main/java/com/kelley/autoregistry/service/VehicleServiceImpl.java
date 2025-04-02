@@ -2,6 +2,8 @@ package com.kelley.autoregistry.service;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.kelley.autoregistry.dto.VehicleDTO;
@@ -91,7 +93,7 @@ public class VehicleServiceImpl implements VehicleService {
 	}
 
 	@Override
-	public VehicleDTO searchVehicle(String vin) throws VehicleNotFoundException {
+	public VehicleDTO findVehicleByVin(String vin) throws VehicleNotFoundException {
 		
 		Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin(vin);
 		
@@ -100,6 +102,20 @@ public class VehicleServiceImpl implements VehicleService {
 		Vehicle vehicle = optionalVehicle.get();
 		
 		return vehicleMapper.toDTO(vehicle);
+	}
+	
+	@Override
+	public Page<VehicleDTO> findVehiclesByOwnerId(Long ownerId, Pageable pageable) throws OwnerNotFoundException {
+		
+		Optional<Owner> ownerOptional = ownerRepository.findById(ownerId);
+		
+		if (ownerOptional.isEmpty()) throw new OwnerNotFoundException("Owner not found with ID: " + ownerId);
+		
+		Owner owner = ownerOptional.get();
+		
+		Page<Vehicle> vehicles = vehicleRepository.findByOwner(owner, pageable);
+		
+		return vehicles.map(vehicle -> vehicleMapper.toDTO(vehicle));
 	}
 
 	@Override
@@ -113,5 +129,7 @@ public class VehicleServiceImpl implements VehicleService {
 		
 		vehicleRepository.delete(vehicle);
 	}
+
+	
 
 }
