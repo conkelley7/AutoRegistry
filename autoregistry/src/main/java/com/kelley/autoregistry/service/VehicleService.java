@@ -1,5 +1,8 @@
 package com.kelley.autoregistry.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.kelley.autoregistry.dto.VehicleDTO;
 import com.kelley.autoregistry.exception.OwnerNotFoundException;
 import com.kelley.autoregistry.exception.VehicleNotFoundException;
@@ -34,7 +37,17 @@ public interface VehicleService {
 	 * @param vin - Vin of the desired vehicle.
 	 * @return VehicleDTO - return vehicle details if found or Exception if no vehicle or owner are found.
 	 */
-	VehicleDTO searchVehicle(String vin) throws VehicleNotFoundException;
+	VehicleDTO findVehicleByVin(String vin) throws VehicleNotFoundException;
+	
+	/**
+	 * Return all vehicles linked to a particular owner, paginated
+	 * 
+	 * @param ownerId
+	 * @param pageable
+	 * @return Page with VehicleDTO objects
+	 */
+	Page<VehicleDTO> findVehiclesByOwnerId(Long ownerId, Pageable pageable);
+	
 	
 	/**
 	 * Delete a vehicle by its VIN number.

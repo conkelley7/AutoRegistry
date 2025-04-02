@@ -7,6 +7,9 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.kelley.autoregistry.model.Owner;
@@ -93,5 +96,36 @@ public class VehicleRepositoryTest {
 		Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin("12345ABCDE");
 		Vehicle foundVehicle = optionalVehicle.get();
 		assertEquals(vehicle1, foundVehicle);
+	}
+	
+	@Test
+	public void testFindByOwner() {
+		Owner owner = new Owner();
+		owner.setFirstName("John");
+		owner.setLastName("Doe");
+		owner.setEmail("john.doe@example.com");
+		owner.setPhoneNumber("123-456-7890");
+		owner.setAddress("New Address");
+		
+		owner = ownerRepository.save(owner);
+		
+		Vehicle vehicle = new Vehicle();
+		vehicle.setVin("12345ABCDE");
+		vehicle.setMake("Ford");
+		vehicle.setModel("F150");
+		vehicle.setColor("White");
+		vehicle.setLicensePlate("ABC123");
+		vehicle.setYear(2015);
+		vehicle.setRegistrationDate(LocalDate.now());
+		vehicle.setOwner(owner);
+		
+		vehicle = vehicleRepository.save(vehicle);
+		
+		Pageable pageable = PageRequest.of(0, 1);
+		
+		Page<Vehicle> sameVehiclePage = vehicleRepository.findByOwner(owner, pageable);
+		Vehicle sameVehicle = sameVehiclePage.getContent().get(0);
+		
+		assertEquals(vehicle, sameVehicle);
 	}
 }
